@@ -1,0 +1,71 @@
+body {
+  background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div {
+  background-color: white;
+  height: 19px;
+  width: 19px;
+}
+
+.square {
+  border: 0.05px solid whitesmoke;
+}
+
+.grid {
+  height: 400px;
+  width: 191px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.placedBlock {
+  /* border: solid 0.05px black; */
+  /* background-color: purple; */
+}
+
+.fallingBlock {
+}
+
+.topRow {
+  /* background-color: grey; */
+}
+
+.bottomRow {
+  background-color: darkgrey;
+}
+
+.previousGrid {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tetriminoI {
+  background-color: aqua;
+}
+
+.tetriminoO {
+  background-color: gold;
+}
+
+.tetriminoL {
+  background-color: orange;
+}
+
+.tetriminoZ {
+  background-color: greenyellow;
+}
+
+.tetriminoT {
+  background-color: magenta;
+}
+
+.overflow {
+  background-color: aliceblue;
+}
