@@ -193,14 +193,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const validRotaion = () => {
-    let nextBlock = tetriminoes[blockId][(currentRotation+1)%3];
-    let overvien = nextBlock.some(idx => (currentPos + idx) % width === width - 1) && nextBlock.some(idx => (currentPos + idx) % width ===  0);
+    let nextBlock = tetriminoes[blockId][(currentRotation+1)%4];
+    let overlap = nextBlock.some(idx => (currentPos + idx) % width === width - 1) && nextBlock.some(idx => (currentPos + idx) % width ===  0);
     let isFilled = nextBlock.some(idx => {
       if (currentPos + idx < 0) return false;
       return squares[currentPos + idx].classList.contains("placedBlock");
     });
-    if (!(overvien || isFilled)) console.log("Hello");
-    return !(overvien || isFilled);
+    return !(overlap || isFilled);
   }
 
   const rotate = () => {
@@ -218,7 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
     currentPos = 4;
     scoreSpan.innerHTML = score;
     draw();
-    scroller = setInterval(moveDown, 1000-level*50/1000);
+    let speed = 1000-level*100;
+    if (speed < 300) speed = 300;
+    scroller = setInterval(moveDown, speed);
     if (currentBlock.some(idx => {
       if (currentPos + idx < 0) return false;
       return squares[currentPos + idx].classList.contains("placedBlock");
@@ -229,19 +230,22 @@ document.addEventListener("DOMContentLoaded", () => {
     drawNext();
   }
 
-
-  const overflowAnimation = () => {
-    console.log("OVEEER");
-    for (let i=squares.length-1; i>=0; i--) {
-      squares[i].classList.add("overflow");
-      if (i%10 === 0) setTimeout(()=>{}, 1000);
+  const fill = (pos) => {
+    if (pos < 0) {
+      squares[0].classList.add("overflow");
     }
+    for (let i=0; i<10; i++) {
+      if (pos-i>0) {
+        squares[pos-i].classList.add("overflow");
+      }
+    }
+    setTimeout(() => {fill(pos-10);}, pos);
   }
 
   const stopGame = () => {
     clearInterval(scroller);
     gameOn = false;
-    setTimeout(overflowAnimation, 1000);
+    setTimeout(()=>{fill(squares.length-1)}, 1000);
   }
 
   const dropBlockAfterDeletion = (poses) => {
@@ -271,6 +275,14 @@ document.addEventListener("DOMContentLoaded", () => {
         score += 1200 * (level + 1);
         default:
    }
+   if (score > 500) level = 1;
+   if (score > 1000) level = 2;
+   if (score > 1500) level = 3;
+   if (score > 2500) level = 4;
+   if (score > 3500) level = 5;
+   if (score > 4500) level = 6;
+   if (score > 5500) level = 7;
+   if (score > 10000) level = 8;
  }
 
   const checkRows = () => {
@@ -322,7 +334,3 @@ document.addEventListener("DOMContentLoaded", () => {
   // dropBlock();
   document.addEventListener('keydown', control);
 })
-
-
-//TODO: make next block window
-// TODO: add bondry check for all squares[currentPos + idx]

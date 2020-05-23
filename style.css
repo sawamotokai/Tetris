@@ -1,5 +1,20 @@
 body {
-  background-color: lightgrey;
+  background-color: rgba(154, 230, 146, 0.726);
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+h1 {
+  color: white;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+}
+
+.game {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +36,7 @@ body {
 }
 
 #nextGrid {
-  height: 80px;
+  height: 76px;
   width: 80px;
   display: flex;
   flex-direction: row;
@@ -72,5 +87,5 @@ body {
 }
 
 .overflow {
-  background-color: aliceblue;
+  background-color: grey;
 }
