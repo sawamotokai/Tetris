@@ -233,6 +233,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const fill = (pos) => {
     if (pos < 0) {
       squares[0].classList.add("overflow");
+      nextSquares.forEach(sq => {sq.classList.add("overflow")});
+      return;
     }
     for (let i=0; i<10; i++) {
       if (pos-i>0) {
