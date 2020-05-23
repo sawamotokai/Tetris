@@ -2,16 +2,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const grid = document.getElementsByClassName("grid")[0];
   const squares = grid.getElementsByTagName("div");
   const width = 10;
-  const height = 20;
+  const nextWindowWidth = 4;
   let currentPos = 4;
   let currentRotation = 0;
   let gameOn = false;
+  const nextGrid = document.getElementById("nextGrid");
+  const nextSquares = Array.from(nextGrid.getElementsByTagName("div"));
+  let scoreSpan = document.getElementById("score");
+  let level = 0;
+  let score = 0;
 
   const tetriminoL = [
     [1-2*width, width+1-2*width, width*2+1-2*width, 2-2*width],
     [width-2*width, 1+width-2*width, 2+width-2*width, 2*width+2-2*width],
     [1-2*width, -width*2 + width+1, -width*2 + width*2+1, -width*2 + width*2],
     [ -width*2 +width, -width*2 + width*2, -width*2 + width*2+1, -width*2 + width*2+2]
+  ];
+
+  const nextL = [
+    [1, nextWindowWidth + 1, nextWindowWidth * 2 + 1 , 2 ],
+    [nextWindowWidth, 1+nextWindowWidth, 2+nextWindowWidth, 2*nextWindowWidth+2],
+    [1,  nextWindowWidth+1,  nextWindowWidth*2+1,  nextWindowWidth*2],
+    [ nextWindowWidth,  nextWindowWidth*2,  nextWindowWidth*2+1,  nextWindowWidth*2+2]
   ]
   
   const tetriminoT = [
@@ -19,36 +31,96 @@ document.addEventListener("DOMContentLoaded", () => {
     [1-width, width+1-width, width*2+1-width, width + 2-width],
     [width*2+1-width, width-width, width+1-width, width+2-width],
     [1-width, width+1-width, width*2+1-width, width-width],
-  ]
+  ];
+  
+ 
+  const nextT = [
+    [1, nextWindowWidth, nextWindowWidth+1, nextWindowWidth+2],
+    [1, nextWindowWidth+1, nextWindowWidth*2+1, nextWindowWidth + 2],
+    [nextWindowWidth*2+1, nextWindowWidth, nextWindowWidth+1, nextWindowWidth+2],
+    [1, nextWindowWidth+1, nextWindowWidth*2+1, nextWindowWidth],
+  ];
   
   const tetriminoO = [
     [1-width,0-width,width+1-width, width+0-width],
     [1-width,0-width,width+1-width, width+0-width],
     [1-width,0-width,width+1-width, width+0-width],
     [1-width,0-width,width+1-width, width+0-width],
-  ]
+  ];
+
+  const nextO = [
+    [1 , 0 , nextWindowWidth + 1 , nextWindowWidth + 0 ],
+    [1,0,nextWindowWidth+1, nextWindowWidth+0],
+    [1,0-nextWindowWidth,nextWindowWidth+1, nextWindowWidth+0],
+    [1,0,nextWindowWidth+1, nextWindowWidth+0],
+  ];
 
   const tetriminoZ = [
     [width+1-width, width+2-width, width*2-width, width*2+1-width], 
     [0-width, width-width, width+1-width, width*2+1-width],
     [width+1-width, width+2-width, width*2-width, width*2+1-width], 
     [0-width, width-width, width+1-width, width*2+1-width],
-  ]
+  ];
+
+  const nextZ = [
+    [nextWindowWidth+1, nextWindowWidth+2, nextWindowWidth*2, nextWindowWidth*2+1], 
+    [0, nextWindowWidth, nextWindowWidth+1, nextWindowWidth*2+1],
+    [nextWindowWidth+1, nextWindowWidth+2, nextWindowWidth*2, nextWindowWidth*2+1], 
+    [0, nextWindowWidth, nextWindowWidth+1, nextWindowWidth*2+1],
+  ];
 
   const tetriminoI = [
     [1-3*width, width+1-3*width, width*2+1-3*width, width*3+1-3*width],
     [width-3*width, width+1-3*width, width+2-3*width, width+3-3*width],
     [1-3*width, width+1-3*width, width*2+1-3*width, width*3+1-3*width],
     [width-3*width, width+1-3*width, width+2-3*width, width+3-3*width],
-  ]
-  const tetriminoes = [tetriminoI, tetriminoL, tetriminoO, tetriminoT, tetriminoZ];
-  const tetriminoColor = ["tetriminoI", "tetriminoL", "tetriminoO", "tetriminoT", "tetriminoZ"];
-// TODO: add J and S tetrominoes
-  // let blockId = Math.floor(Math.random()*tetriminoes.length);
-  // let currentBlock = tetriminoes[blockId][currentRotation];
+  ];
+
+  const nextI = [
+    [1, nextWindowWidth+1, nextWindowWidth*2+1, nextWindowWidth*3+1],
+    [nextWindowWidth, nextWindowWidth+1, nextWindowWidth+2, nextWindowWidth+3],
+    [1, nextWindowWidth+1, nextWindowWidth*2+1, nextWindowWidth*3+1],
+    [nextWindowWidth, nextWindowWidth+1, nextWindowWidth+2, nextWindowWidth+3],
+  ];
+
+  const tetriminoJ = [
+    [1-2*width, width+1-2*width, width*2+1-2*width, -2*width],
+    [width-2*width, 1+width-2*width, 2+width-2*width, 2-2*width],
+    [1-2*width, -width*2 + width+1, -width*2 + width*2+1, -width*2 + 2 + width*2],
+    [ -width*2 +width, -width*2 + 1, -width*2+2, -width*2]
+  ];
+
+ 
+  const nextJ = [
+    [1, nextWindowWidth+1, nextWindowWidth*2+1, 0],
+    [nextWindowWidth, 1+nextWindowWidth, 2+nextWindowWidth, 2],
+    [1, nextWindowWidth+1,  nextWindowWidth*2+1,  2 + nextWindowWidth*2],
+    [ nextWindowWidth, 1, 2, 0]
+  ];
+
+
+  const tetriminoS = [
+    [width+1-width, width-width, width*2+2-width, width*2+1-width], 
+    [2-width, width+2-width, width+1-width, width*2+1-width],
+    [width+1-width, width-width, width*2+2-width, width*2+1-width], 
+    [2-width, width+2-width, width+1-width, width*2+1-width],
+  ]; 
+
+  const nextS =  [
+    [nextWindowWidth+1, nextWindowWidth, nextWindowWidth*2+2, nextWindowWidth*2+1], 
+    [2, nextWindowWidth+2, nextWindowWidth+1, nextWindowWidth*2+1],
+    [nextWindowWidth+1, nextWindowWidth, nextWindowWidth*2+2, nextWindowWidth*2+1], 
+    [2, nextWindowWidth+2, nextWindowWidth+1, nextWindowWidth*2+1],
+  ]; 
+
+  const tetriminoes = [tetriminoI, tetriminoL, tetriminoO, tetriminoT, tetriminoZ, tetriminoJ, tetriminoS];
+  const tetriminoColor = ["tetriminoI", "tetriminoL", "tetriminoO", "tetriminoT", "tetriminoZ", "tetriminoL", "tetriminoZ"];
+  const nextTetrominoes = [nextI, nextL, nextO, nextT, nextZ, nextJ, nextS];
   let blockId = 1;
   let currentBlock = [];
+  let comingBlockId = Math.floor(Math.random()*tetriminoes.length);
   let scroller;
+  
 
   const draw = () => {
     currentBlock.forEach(idx => {
@@ -66,6 +138,14 @@ document.addEventListener("DOMContentLoaded", () => {
         squares[currentPos + idx].classList.remove(tetriminoColor[blockId]);
       }
     });
+  }
+
+  const drawNext = () => {
+    let nextBlock = nextTetrominoes[comingBlockId][0];
+    nextSquares.forEach(sq => {sq.className = "square";});
+    nextBlock.forEach(idx => {
+      nextSquares[idx].classList.add(tetriminoColor[comingBlockId]);
+    }) 
   }
 
   const moveDown = () => {
@@ -119,10 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (currentPos + idx < 0) return false;
       return squares[currentPos + idx].classList.contains("placedBlock");
     });
-    // let isAtRightEdge = currentBlock.some(idx => (currentPos + idx) % width === width - 1);
-    // let isRightFilled = currentBlock.some(idx => squares[currentPos + idx + 1].classList.contains("placedBlock"));
-    let isAtLeftEdge = nextBlock.some(idx => (currentPos + idx)%width === 0);
-    let isLeftFilled = nextBlock.some(idx => squares[currentPos + idx].classList.contains("placedBlock"));
     if (!(overvien || isFilled)) console.log("Hello");
     return !(overvien || isFilled);
   }
@@ -136,13 +212,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const dropBlock = () => {
-    
-    blockId = Math.floor(Math.random()*tetriminoes.length);
-    console.log(blockId);
+    blockId = comingBlockId;
+    comingBlockId = Math.floor(Math.random()*tetriminoes.length);
     currentBlock = tetriminoes[blockId][currentRotation];
     currentPos = 4;
+    scoreSpan.innerHTML = score;
     draw();
-    scroller = setInterval(moveDown, 1000);
+    scroller = setInterval(moveDown, 1000-level*50/1000);
     if (currentBlock.some(idx => {
       if (currentPos + idx < 0) return false;
       return squares[currentPos + idx].classList.contains("placedBlock");
@@ -150,10 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
       stopGame();
       return ;
     }
-    // if (currentBlock.some(idx => squares[currentPos + idx].classList.contains("placedBlock"))) {
-    //   stopGame();
-    //   return ;
-    // }
+    drawNext();
   }
 
 
@@ -183,6 +256,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
  }
 
+ const addScore = (numRows) => {
+    switch (numRows) {
+      case 1:
+        score += 40 * (level + 1);
+        break;
+      case 2:
+        score += 100 * (level + 1);
+        break;
+      case 3:
+        score += 300 * (level + 1);
+        break;
+      case 4:
+        score += 1200 * (level + 1);
+        default:
+   }
+ }
 
   const checkRows = () => {
     let isRowFilled = true;
@@ -196,23 +285,19 @@ document.addEventListener("DOMContentLoaded", () => {
         else isRowFilled = true;
       }
     }
-    console.log(deletedRows);
     dropBlockAfterDeletion(deletedRows);
+    if (deletedRows.length) addScore(deletedRows.length);
   }
 
-    const freeze = () => {
+  const freeze = () => {
     currentBlock.forEach(idx => {
       if(currentPos+idx>=0) {
         squares[currentPos + idx].classList.remove("fallingBlock");
         squares[currentPos + idx].classList.add("placedBlock");
       }
     })
-    // if (currentBlock.some(idx => squares[currentPos + idx].classList.contains("topRow"))) {
-    //   stopGame();
-    // }
     checkRows();
     clearInterval(scroller);
-    // if (checkTopRow()) {}
     dropBlock();
   }
 

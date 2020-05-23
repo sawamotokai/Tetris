@@ -5,19 +5,24 @@ body {
   justify-content: center;
 }
 
-div {
+.square {
   background-color: white;
   height: 19px;
   width: 19px;
-}
-
-.square {
   border: 0.05px solid whitesmoke;
 }
 
 .grid {
   height: 400px;
   width: 191px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#nextGrid {
+  height: 80px;
+  width: 80px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
