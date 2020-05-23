@@ -1,4 +1,6 @@
 # Tetris
 
-1. Hit space key to start
-2. Navigate tetrominoes with arrow keys ←→↓
+** Hit space key to start
+** Navigate tetrominoes with arrow keys ←→↓https://guides.github.com/activities/hello-world/
+** Refresh the page to play the game again
+** What is your high score?
