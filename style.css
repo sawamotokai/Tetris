@@ -21,13 +21,13 @@ header {
 
 .square {
   background-color: white;
-  height: 19px;
-  width: 19px;
+  height: 17px;
+  width: 17px;
   border: 0.05px solid whitesmoke;
 }
 
 .grid {
-  height: 400px;
+  height: 378px;
   width: 191px;
   display: flex;
   flex-direction: row;
