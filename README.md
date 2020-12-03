@@ -21,3 +21,5 @@
   - Using flex box, aligned each squares inside the grid
   - Defined the colors for each shape and state of blocks
 
+## Deployment
+* This is deployed on github pages since it's a satatic website
