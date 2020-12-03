@@ -1,3 +1,7 @@
+# You can play it here: https://sawamotokai.github.io/tetris/
+![screenshot](sample-tetris.png)
+
+
 ## How to play
 * Hit space key to start
 * Navigate tetrominoes with arrow keys ←→↓
