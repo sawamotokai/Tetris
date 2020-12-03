@@ -1,5 +1,5 @@
 # You can play it here: https://sawamotokai.github.io/tetris/
-![screenshot](sample-tetris.png)
+![screenshot](https://github.com/sawamotokai/tetris/blob/master/tetris-sample.png)
 
 
 ## How to play
