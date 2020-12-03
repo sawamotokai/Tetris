@@ -1,5 +1,5 @@
-# You can play it here: https://sawamotokai.github.io/tetris/
-![screenshot](https://github.com/sawamotokai/tetris/blob/master/tetris-sample.png)
+## You can play it here: https://sawamotokai.github.io/tetris/
+![screenshot](https://github.com/sawamotokai/tetris/blob/master/tetris-sample.png | width=200)
 
 
 ## How to play
@@ -25,5 +25,5 @@
   - Using flex box, aligned each squares inside the grid
   - Defined the colors for each shape and state of blocks
 
-## Deployment
+## How I deployed it
 * This is deployed on github pages since it's a satatic website
