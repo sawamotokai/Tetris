@@ -1,4 +1,5 @@
-## You can play it here: https://sawamotokai.github.io/tetris/
+## You can play it here: 
+<h3><st> You can play it <a href="https://sawamotokai.github.io/tetris/">here</a> </st></h3>
 <img src="tetris-sample.png" width="400" height="400" align="right"/>
 
 
